@@ -11,8 +11,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/auth",
-    name: "AuthLayout",
-    component: () => import("@/layout/AuthLayout.vue"),
+    name: "Auth",
+    component: () => import("@/views/Auth.vue"),
     meta: {
       layout: "auth",
     },

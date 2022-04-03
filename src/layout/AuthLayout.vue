@@ -1,12 +1,14 @@
 <template>
   <div class="container">
-    <div class="card"></div>
+    <!-- <router-view /> -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Auth from "@/views/Auth.vue";
 export default defineComponent({
+  component: { Auth },
   setup() {
     return {};
   },

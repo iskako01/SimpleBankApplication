@@ -1,9 +1,5 @@
 <template>
   <div id="nav">
-    <!-- <router-view></router-view>
-
-    <MainLayout />
-    <AuthLayout /> -->
     <component :is="`${layout}-layout`" v-if="layout" />
   </div>
   <router-view />
