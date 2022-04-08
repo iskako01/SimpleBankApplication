@@ -12,7 +12,7 @@
         <a href="#">Messages</a>
       </li>
       <li>
-        <a href="#">Logout</a>
+        <a href="#" @click.prevent="logout">Logout</a>
       </li>
     </ul>
   </nav>
@@ -20,10 +20,19 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
-    return {};
+    const store = useStore();
+    const router = useRouter();
+
+    const logout = () => {
+      store.commit("logout");
+      router.push({ name: "Auth" });
+    };
+    return { logout };
   },
 });
 </script>

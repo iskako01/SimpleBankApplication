@@ -1,12 +1,14 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+import store from "@/store";
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: "/",
     name: "Home",
     component: () => import("@/views/Home.vue"),
     meta: {
       layout: "main",
+      auth: true,
     },
   },
   {
@@ -15,6 +17,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/Auth.vue"),
     meta: {
       layout: "auth",
+      auth: false,
     },
   },
   {
@@ -23,6 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/Requests.vue"),
     meta: {
       layout: "main",
+      auth: true,
     },
   },
   {
@@ -31,6 +35,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/Help.vue"),
     meta: {
       layout: "main",
+      auth: true,
     },
   },
 ];
@@ -38,6 +43,18 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const requireAuth = to.meta.auth;
+
+  if (requireAuth && store.getters["isAuthenticated"]) {
+    next();
+  } else if (requireAuth && !store.getters["isAuthenticated"]) {
+    next("/auth?message=auth");
+  } else {
+    next();
+  }
 });
 
 export default router;

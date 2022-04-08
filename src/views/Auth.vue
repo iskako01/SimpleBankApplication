@@ -4,13 +4,27 @@
 
     <div :class="['form-control', { invalid: eError }]">
       <label for="email">Email</label>
-      <input type="email" id="email" v-model="email" @blur="eBlur" />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        autocomplete="on"
+        v-model="email"
+        @blur="eBlur"
+      />
       <small v-if="eError">{{ eError }}</small>
     </div>
 
     <div :class="['form-control', { invalid: pError }]">
       <label for="password">Password</label>
-      <input type="password" id="password" v-model="password" @blur="pBlur" />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        autocomplete="on"
+        v-model="password"
+        @blur="pBlur"
+      />
       <small v-if="pError">{{ pError }}</small>
     </div>
 
@@ -52,8 +66,11 @@ export default defineComponent({
       "password",
       yup.string().trim().required("Please enter password").min(6)
     );
-    const onSubmit = handleSubmit((values) => {
-      console.log("form", values);
+    const onSubmit = handleSubmit(async (values) => {
+      console.log(values);
+
+      await store.dispatch("login", values);
+      router.push({ name: "Home" });
     });
     // const login = async () => {
     //   if (email.value != "" && password.value != "") {

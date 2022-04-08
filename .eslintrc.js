@@ -19,7 +19,7 @@ module.exports = {
     camelcase: "off",
     quotes: [2, "double", { avoidEscape: true }],
     indent: ["error", 2, { SwitchCase: 1 }],
-    semi: [2, "always"],
+    // semi: [2, "always"],
     "standard/no-callback-literal": 0,
     "comma-dangle": [
       "error",
