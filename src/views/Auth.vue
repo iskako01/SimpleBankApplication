@@ -35,14 +35,30 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import {
+  useRouter,
+  useRoute,
+  LocationQuery,
+  LocationQueryValue,
+} from "vue-router";
 import { useField, useForm } from "vee-validate";
+import { error } from "@/utils/error";
 import * as yup from "yup";
 
 export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
+
+    if (route.query.message) {
+      console.log(route.query.message);
+
+      store.dispatch("setMessage", {
+        value: error(route.query.message),
+        type: "warning",
+      });
+    }
 
     const { handleSubmit } = useForm();
 
@@ -67,23 +83,14 @@ export default defineComponent({
       yup.string().trim().required("Please enter password").min(6)
     );
     const onSubmit = handleSubmit(async (values) => {
-      console.log(values);
-
-      await store.dispatch("login", values);
-      router.push({ name: "Home" });
+      try {
+        await store
+          .dispatch("login", values)
+          .then(() => router.push({ name: "Home" }));
+      } catch (error) {
+        console.log(error);
+      }
     });
-    // const login = async () => {
-    //   if (email.value != "" && password.value != "") {
-    //     await store
-    //       .dispatch("login", {
-    //         email: email.value,
-    //         password: password.value,
-    //       })
-    //       .then(() => {
-    //         router.push({ name: "/" });
-    //       });
-    //   }
-    // };
 
     return {
       email,

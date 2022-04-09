@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <!-- <router-view /> -->
+    <AppMessages />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Auth from "@/views/Auth.vue";
+import AppMessages from "@/components/AppMessages.vue";
+
 export default defineComponent({
-  component: { Auth },
+  components: { AppMessages },
   setup() {
     return {};
   },

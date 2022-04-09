@@ -7,9 +7,25 @@ if (process.env.NODE_ENV === "development") {
   plugins.push(createLogger());
 }
 export default createStore({
-  state: {},
+  state: {
+    message: "",
+  },
   getters: {},
-  mutations: {},
-  actions: {},
+  mutations: {
+    setMessage(state, message: string) {
+      state.message = message;
+    },
+    clearMessage(state) {
+      state.message = "";
+    },
+  },
+  actions: {
+    async setMessage({ commit }, message: string) {
+      commit("setMessage", message);
+      setInterval(() => {
+        commit("clearMessage");
+      }, 5000);
+    },
+  },
   modules: { auth },
 });
