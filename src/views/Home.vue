@@ -15,7 +15,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
+import { useStore } from "vuex";
 import AppPage from "@/components/AppPage.vue";
 import RequestTable from "@/components/RequestTable.vue";
 import RequestModal from "@/components/RequestModal.vue";
@@ -24,8 +25,13 @@ import AppModal from "@/components/AppModal.vue";
 export default defineComponent({
   components: { AppPage, RequestTable, AppModal, RequestModal },
   setup() {
-    const requests = ref([]);
     const modal = ref(false);
+    const store = useStore();
+
+    const requests = computed(() => {
+      return store.getters.requests;
+    });
+    console.log(requests.value);
 
     const close = () => {
       modal.value = false;

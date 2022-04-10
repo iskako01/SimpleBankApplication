@@ -33,16 +33,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import IrequestFormData from "@/types/request/requestData";
+import { defineComponent } from "vue";
 import { useRequestForm } from "@/use/useRequestForm";
+import IrequestFormData from "@/types/request/requestData";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "RequestModal",
   emits: ["created"],
   setup(_, { emit }) {
+    const store = useStore();
+
     const submit = async (values: IrequestFormData): Promise<void> => {
       console.log(values);
+      await store.dispatch("create", values);
       emit("created");
     };
 

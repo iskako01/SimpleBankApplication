@@ -13,14 +13,14 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody v-for="(request, index) in requests" :key="index">
       <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ index + 1 }}</td>
+        <td>{{ request.name }}</td>
+        <td>{{ request.phone }}</td>
+        <td>{{ request.amount }}</td>
+        <td>{{ request.status }}</td>
+        <td>{{}}</td>
       </tr>
     </tbody>
   </table>
@@ -32,7 +32,7 @@ import { defineComponent, PropType } from "vue";
 export default defineComponent({
   props: {
     requests: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
