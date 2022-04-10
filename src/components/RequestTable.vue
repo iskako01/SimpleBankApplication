@@ -8,7 +8,7 @@
         <th>#</th>
         <th>Name</th>
         <th>Phone</th>
-        <th>Cost</th>
+        <th>Amount</th>
         <th>Status</th>
         <th>Action</th>
       </tr>

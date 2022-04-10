@@ -7,7 +7,7 @@
 
     <teleport to="body">
       <AppModal v-if="modal" title="Create the request" @close="close">
-        <RequestModal />
+        <RequestModal @created="modal = false" />
       </AppModal>
     </teleport>
   </AppPage>
