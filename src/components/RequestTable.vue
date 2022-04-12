@@ -2,7 +2,7 @@
   <h4 v-if="!requests.length" class="text-center">
     There are no requests yet.
   </h4>
-  <table v-else class="card">
+  <table v-else class="table">
     <thead>
       <tr>
         <th>#</th>
@@ -13,14 +13,22 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody v-for="(request, index) in requests" :key="index">
-      <tr>
+    <tbody>
+      <tr v-for="(request, index) in requests" :key="index">
         <td>{{ index + 1 }}</td>
         <td>{{ request.name }}</td>
         <td>{{ request.phone }}</td>
         <td>{{ request.amount }}</td>
         <td>{{ request.status }}</td>
-        <td>{{}}</td>
+        <td>
+          <router-link
+            v-slot="{ navigate }"
+            custom
+            :to="{ name: 'Requests', params: { id: request.id } }"
+          >
+            <button class="btn primary" @click="navigate">Open</button>
+          </router-link>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -37,7 +45,11 @@ export default defineComponent({
     },
   },
   setup() {
-    return {};
+    const openRequest = () => {
+      console.log();
+    };
+
+    return { openRequest };
   },
 });
 </script>

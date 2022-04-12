@@ -25,6 +25,9 @@ export default {
 
       getters.requests.push(request);
     },
+    setRequest(state: any, requests: IrequestFormData[]) {
+      state.requests = requests;
+    },
   },
   actions: {
     async create({ commit, dispatch }: any, requests: IrequestFormData) {
@@ -43,6 +46,24 @@ export default {
           },
           { root: true }
         );
+      } catch (e) {
+        dispatch(
+          "setMessage",
+          {
+            value: e,
+            type: "danger",
+          },
+          { root: true }
+        );
+      }
+    },
+    async load({ commit, dispatch }: any) {
+      try {
+        const token = store.getters.token;
+        const { data } = await axios.get(`/requests.json?auth=${token}`);
+        const requests = Object.keys(data).map((id) => ({ ...data[id], id }));
+
+        commit("setRequest", requests);
       } catch (e) {
         dispatch(
           "setMessage",
