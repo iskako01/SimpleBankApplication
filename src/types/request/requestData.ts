@@ -3,4 +3,5 @@ export default interface IrequestFormData {
   phone: string;
   amount: string;
   status: string;
+  id?: string;
 }
