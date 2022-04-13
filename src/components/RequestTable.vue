@@ -18,8 +18,8 @@
         <td>{{ index + 1 }}</td>
         <td>{{ request.name }}</td>
         <td>{{ request.phone }}</td>
-        <td>{{ request.amount }}</td>
-        <td>{{ request.status }}</td>
+        <td>{{ currency(request.amount) }}</td>
+        <td><AppStatus :type="request.status" /></td>
         <td>
           <router-link
             v-slot="{ navigate }"
@@ -36,8 +36,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { currency } from "@/utils/currency";
+import AppStatus from "@/components/AppStatus.vue";
 
 export default defineComponent({
+  components: { AppStatus },
   props: {
     requests: {
       type: Object,
@@ -45,11 +48,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const openRequest = () => {
-      console.log();
-    };
-
-    return { openRequest };
+    return { currency };
   },
 });
 </script>
