@@ -75,5 +75,24 @@ export default {
         );
       }
     },
+
+    async loadByID({ dispatch }: any, id: string) {
+      try {
+        const token: any = store.getters.token;
+
+        const { data } = await axios.get(`/requests/${id}.json?auth=${token}`);
+
+        return data;
+      } catch (e) {
+        dispatch(
+          "setMessage",
+          {
+            value: e,
+            type: "danger",
+          },
+          { root: true }
+        );
+      }
+    },
   },
 };

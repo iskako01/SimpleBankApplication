@@ -30,6 +30,15 @@ const routes = [
     },
   },
   {
+    path: "/request/:id",
+    name: "Request",
+    component: () => import("@/views/Request.vue"),
+    meta: {
+      layout: "main",
+      auth: true,
+    },
+  },
+  {
     path: "/help",
     name: "Help",
     component: () => import("@/views/Help.vue"),

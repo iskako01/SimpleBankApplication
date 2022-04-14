@@ -1,4 +1,7 @@
 <template>
+  <div class="breadcrumbs" v-if="back">
+    <router-link class="btn" :to="{ name: 'Home' }">Back</router-link>
+  </div>
   <div class="card">
     <h1 class="card-title">
       {{ title }}
@@ -17,6 +20,11 @@ export default defineComponent({
     title: {
       type: String as PropType<string>,
       required: true,
+    },
+    back: {
+      type: Boolean as PropType<boolean>,
+      required: false,
+      default: false,
     },
   },
   setup(props) {

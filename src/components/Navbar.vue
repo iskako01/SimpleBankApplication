@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'Home' }">Online Bank</router-link>
     <ul class="navbar-menu">
       <li>
-        <router-link :to="{ name: 'Requests' }">Requests</router-link>
+        <router-link :to="{ name: 'Home' }">Requests</router-link>
       </li>
       <li>
         <router-link :to="{ name: 'Help' }">Help</router-link>
