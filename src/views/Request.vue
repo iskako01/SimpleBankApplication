@@ -5,6 +5,19 @@
     <p><strong>Phone:</strong>{{ request.phone }}</p>
     <p><strong>Amount:</strong>{{ currency(request.amount) }}</p>
     <p><strong>Status:</strong><AppStatus :type="request.status" /></p>
+
+    <div class="form-control">
+      <label for="status">Status</label>
+      <select id="status" v-model="status">
+        <option value="done">Done</option>
+        <option value="cancelled">Cancelled</option>
+        <option value="active">Active</option>
+        <option value="pending">Pending</option>
+      </select>
+    </div>
+
+    <button class="btn danger" @click="remove">Delete</button>
+    <button class="btn" v-if="hasChanged" @click="update">update</button>
   </AppPage>
   <h3 v-else class="text-center text-white">
     The request with ID: {{ id }} is not
@@ -12,8 +25,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { defineComponent, ref, onMounted, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { currency } from "@/utils/currency";
 import IrequestFormData from "@/types/request/requestData";
@@ -27,6 +40,7 @@ export default defineComponent({
   components: { AppPage, Loading, AppStatus },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const store = useStore();
     const loading = ref(false);
     const id = route.params.id;
@@ -37,14 +51,40 @@ export default defineComponent({
       status: "",
       id: "",
     });
+    const status = ref("");
 
     onMounted(async () => {
       loading.value = true;
       request.value = await store.dispatch("loadByID", id);
+      status.value = request.value?.status;
       loading.value = false;
     });
 
-    return { loading, request, id, currency };
+    const hasChanged = computed(() => request.value.status !== status.value);
+
+    const remove = async () => {
+      await store.dispatch("remove", id);
+      router.push({ name: "Home" });
+    };
+    const update = async () => {
+      await store.dispatch("update", {
+        ...request.value,
+        status: status.value,
+        id,
+      });
+      router.push({ name: "Home" });
+    };
+
+    return {
+      loading,
+      request,
+      id,
+      currency,
+      remove,
+      update,
+      status,
+      hasChanged,
+    };
   },
 });
 </script>

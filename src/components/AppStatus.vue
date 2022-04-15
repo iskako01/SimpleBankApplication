@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from "vue";
+import { defineComponent, ref, PropType, watch } from "vue";
 
 export default defineComponent({
   name: "AppStatus",
@@ -19,17 +19,22 @@ export default defineComponent({
       active: "primary",
       cancelled: "danger",
       done: "primary",
-      panding: "warning",
+      pending: "warning",
     };
     const textMap = {
       active: "Active",
       cancelled: "Cancelled",
       done: "Done",
-      panding: "Warning",
+      pending: "Warning",
     };
 
     const className = ref(classesMap[props.type as keyof typeof classesMap]);
     const text = ref(textMap[props.type as keyof typeof textMap]);
+
+    watch(props, (val) => {
+      className.value = classesMap[val.type as keyof typeof classesMap];
+      text.value = textMap[val.type as keyof typeof textMap];
+    });
 
     return { className, text };
   },

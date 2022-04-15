@@ -94,5 +94,55 @@ export default {
         );
       }
     },
+    async remove({ dispatch }: any, id: string) {
+      try {
+        const token: any = store.getters.token;
+
+        await axios.delete(`/requests/${id}.json?auth=${token}`);
+        dispatch(
+          "setMessage",
+          {
+            value: "The request was successfully removed",
+            type: "primary",
+          },
+          { root: true }
+        );
+      } catch (e) {
+        dispatch(
+          "setMessage",
+          {
+            value: e,
+            type: "danger",
+          },
+          { root: true }
+        );
+      }
+    },
+    async update({ dispatch }: any, request: IrequestFormData) {
+      try {
+        console.log(request);
+
+        const token: any = store.getters.token;
+        await axios.put(`/requests/${request.id}.json?auth=${token}`, request);
+
+        dispatch(
+          "setMessage",
+          {
+            value: "The request was successfully updated",
+            type: "primary",
+          },
+          { root: true }
+        );
+      } catch (e) {
+        dispatch(
+          "setMessage",
+          {
+            value: e,
+            type: "danger",
+          },
+          { root: true }
+        );
+      }
+    },
   },
 };
