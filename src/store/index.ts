@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === "development") {
 export default createStore({
   state: {
     message: "",
+    sidebar: false,
   },
   getters: {},
   mutations: {
@@ -18,6 +19,12 @@ export default createStore({
     },
     clearMessage(state) {
       state.message = "";
+    },
+    openSidebar(state) {
+      state.sidebar = true;
+    },
+    closeSidebar(state) {
+      state.sidebar = false;
     },
   },
   actions: {

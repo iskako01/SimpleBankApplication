@@ -9,7 +9,7 @@
         <router-link :to="{ name: 'Help' }">Help</router-link>
       </li>
       <li>
-        <a href="#">Messages</a>
+        <a @click.prevent="openSidebar" href="#">Messages</a>
       </li>
       <li>
         <a href="#" @click.prevent="logout">Logout</a>
@@ -28,11 +28,15 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
 
+    const openSidebar = () => {
+      store.commit("openSidebar");
+    };
+
     const logout = () => {
       store.commit("logout");
       router.push({ name: "Auth" });
     };
-    return { logout };
+    return { logout, openSidebar };
   },
 });
 </script>
